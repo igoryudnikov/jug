@@ -76,12 +76,10 @@ func SolveWithPredicate(initState State, solutionPredicate func(State) bool) []S
 				newState := operation.StateChange(solutionCandidate.State)
 				_, stateExists := states[newState]
 				if solutionPredicate(newState) {
-					s := solutionCandidate.Updated(newState, operation.Name)
-					solutions = append(solutions, s)
+					solutions = append(solutions, solutionCandidate.Updated(newState, operation.Name))
 				} else if !stateExists && newState.IsValid() {
 					states[newState] = struct{}{}
-					c := solutionCandidate.Updated(newState, operation.Name)
-					currentCandidates = append(currentCandidates, c)
+					currentCandidates = append(currentCandidates, solutionCandidate.Updated(newState, operation.Name))
 				}
 			}
 		}
